@@ -1,0 +1,82 @@
+wb = xlsx_package.workbook
+
+wb.styles.fonts.first.name = 'Times New Roman'
+center = wb.styles.add_style alignment: { horizontal: :center, vertical: :center }
+vertical_center = wb.styles.add_style alignment: { vertical: :center }
+horizontal_center = wb.styles.add_style  alignment: { horizontal: :center }
+table_header = wb.styles.add_style :sz =>  14, alignment: { horizontal: :center, vertical: :center }, \
+                                   :border => { :style => :medium, :color => "00000000" }, b: true
+table_row_normal = wb.styles.add_style alignment: { horizontal: :center },:sz =>  14, :border => { :style => :thin, :color => "00000000" }
+table_row_currency = wb.styles.add_style  alignment: { horizontal: :center }, :sz =>  14,:border => { :style => :thin, :color => "00000000" }, :num_fmt => 3
+table_row_currency_bold = wb.styles.add_style alignment: { vertical: :center ,horizontal: :center},
+                  :sz =>  14, b: true, :num_fmt => 3
+
+sheet = wb.add_worksheet(name: "Report", :page_setup => {orientation: :landscape})
+sheet.page_setup.fit_to :width => 1, :height => 1
+sheet.page_setup.paper_size = 9
+sheet.add_row [nil] * 6#, height: 70
+# Đơn vị và địa chỉ
+
+#sheet["A1"].value = "Đơn vị : .............................................\nĐịa chỉ: ............................................."
+#sheet["A1"].style = vertical_center
+#sheet["A1"].b = true
+#sheet["A1"].sz = 16
+#sheet.merge_cells("A1:F1")
+
+# Tiêu ngữ
+#rt = Axlsx::RichText.new
+#rt.add_run("Mẫu số S10-DN\n", b: true, sz: 16)
+#rt.add_run("(Ban hành theo Thông tư số  200/2014/TT-BTC\nNgày 22/12/2014 của Bộ Tài Chính)",sz: 16)
+#sheet["I1"].type = :richtext
+#sheet["I1"].value = rt
+
+#sheet["I1"].style = center
+
+#sheet.add_row [nil] * 10
+sheet.add_row [nil] * 8
+# Title
+sheet.add_row [nil] * 8, style: center, height: 25
+sheet["A3"].value = "Báo cáo chi tiết xuất nhập hàng hóa"
+sheet["A3"].b = true
+sheet["A3"].sz = 20
+sheet.merge_cells "A3:H3"
+sheet.add_row [nil] * 8, style: center
+sheet["A4"].value = "Năm:.........."
+sheet["A4"].sz = 16
+sheet.merge_cells "A4:H4"
+sheet.add_row [nil] * 8, style: center
+sheet["A5"].value = "Tài khoản : ........................... Tên Kho:................................."
+sheet.merge_cells "A5:H5"
+sheet["A5"].sz = 16
+sheet.add_row [nil] * 8, style: center
+sheet["A6"].value = "Tên, quy cách nguyên vật liệu, công cụ, dụng cụ (sản phẩm, hàng hóa):......................................."
+sheet.merge_cells "A6:H6"
+sheet["A6"].sz = 16
+sheet.add_row [nil] * 8
+sheet.add_row [nil] * 8
+
+# Table header
+sheet.add_row ["Ngày Tháng", "Sản phẩm", "Số lượng", "Đơn Giá", "Tổng tiền", "Hành động",  "Đối tượng mua bán", "Ghi chú"],
+              style: table_header
+# table content
+first_row = 9
+last_row = nil
+@histories.each_with_index do |history, index|
+  last_row = sheet.add_row([
+                             history.created_at.strftime("%d/%m/%y"),
+                             history.product.name,
+                             history.amount,
+                             history.price,
+                             history.amount * history.price,
+                             history.action,
+                             history.object,
+                             history.note
+                           ], style: table_row_currency, :sz => 14)
+end
+
+#if @histories.any?
+  #sheet.add_row([nil, "Tổng nhập", "=SUM(C#{first_row}:C#{last_row.row_index + 1})",
+    #"Tổng xuất","=SUM(E#{first_row}:E#{last_row.row_index + 1})", nil, nil,nil], style: table_row_currency_bold)
+#end
+
+sheet.column_widths 15, nil, 15, 15, 25 , 15, nil

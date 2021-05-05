@@ -1,0 +1,20 @@
+<table class="table table-responsive statistic table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Tên sản phẩm</th>
+            <th>Đơn giá mới nhất</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% histories.each_with_index do |history, index| %>
+            <tr>
+                <th><%= index + 1 %></th>
+                <td><%= history.product.name %></td>
+                <td><%= history.price %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+<br/>
+<%= link_to "Tải file Excel", rails_admin.statistic_path(format: :xlsx) %>

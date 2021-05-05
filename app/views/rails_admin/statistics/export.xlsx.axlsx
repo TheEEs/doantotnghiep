@@ -1,0 +1,21 @@
+wb = xlsx_package.workbook
+
+wb.styles.fonts.first.name = 'Times New Roman'
+center = wb.styles.add_style alignment: { horizontal: :center, vertical: :center }
+vertical_center = wb.styles.add_style alignment: { vertical: :center }
+horizontal_center = wb.styles.add_style  alignment: { horizontal: :center }
+table_header = wb.styles.add_style :sz =>  14, alignment: { horizontal: :center, vertical: :center }, \
+                                   :border => { :style => :medium, :color => "00000000" }, b: true
+table_row_normal = wb.styles.add_style alignment: { horizontal: :center },:sz =>  14, :border => { :style => :thin, :color => "00000000" }
+table_row_currency = wb.styles.add_style  alignment: { horizontal: :center }, :sz =>  14,:border => { :style => :thin, :color => "00000000" }, :num_fmt => 3
+table_row_currency_bold = wb.styles.add_style alignment: { vertical: :center ,horizontal: :center},
+                  :sz =>  14, b: true, :num_fmt => 3
+
+sheet = wb.add_worksheet(name: "Report", :page_setup => {orientation: :landscape})
+sheet.page_setup.fit_to :width => 1, :height => 1
+sheet.page_setup.paper_size = 9
+sheet.add_row ["Thống kê"], sz: 18, height: 30, style: vertical_center
+sheet.add_row ["#", "Tên sản phẩm", "Đơn giá mới nhất"], style: table_header
+histories.each_with_index do |history,index|
+    sheet.add_row [index,history.product.name, history.price], style: table_row_currency
+end

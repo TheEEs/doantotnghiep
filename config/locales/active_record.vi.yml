@@ -1,0 +1,42 @@
+vi:
+  attributes:
+    created_at: Tạo lúc
+    updated_at: Cập nhật lúc
+  activerecord:
+    errors: 
+      models:
+        history:
+          attributes:
+            amount: 
+              too_large: Số lượng hàng xuất kho vượt quá số lượng có sẵn (%{available})
+    models:
+      user: Người dùng
+      history: Lịch sử xuất/nhập
+      product: Sản phẩm
+      stock_manager: Quản kho
+    attributes:
+      user:
+        login: "Handle"
+        name: "Tên"
+      history:
+        price: Giá
+        product: Sản phẩm
+        action: "Hành động"
+        action_import: Nhập kho
+        action_export: Xuất kho
+        object: Đối tượng mua/bán
+        stock_manager: Quản kho
+        amount: Số lượng
+        note: Ghi chú
+        created_at: Ngày Tháng
+        total: Tổng giá
+      stock_manager:
+        name: Tên quản kho
+        histories: Lịch sử xuất/nhập kho
+      product:
+        name: Tên sản phẩm
+        number: Số lượng tồn kho
+        unit: Đơn vị đo
+        price: Giá
+        min: Số lượng tối thiểu
+        need_import: Cần nhập thêm

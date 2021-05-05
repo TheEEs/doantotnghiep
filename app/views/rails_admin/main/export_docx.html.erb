@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="row">
+        <%= form_tag main_app.export_path, method: :get do %>
+            <%= hidden_field_tag 'ids', hash_ids %>
+            <%= hidden_field_tag 'model_name', model_name %>
+            <%= hidden_field_tag 'aggressive', true %>
+            <% if model_name == 'product' %>
+                <div class="form-check">
+                    <%= radio_button_tag 'by', "month", class: "form-check-input" %>
+                    <label class="form-check-label" for="by_month">
+                        Theo tháng
+                    </label>
+                </div>
+                <div class="form-check">
+                    <%= radio_button_tag 'by', "quarter", class: "form-check-input" %>
+                    <label class="form-check-label" for="by_quarter">
+                        Theo quý
+                    </label>
+                </div>
+                <div class="form-check">
+                    <%= radio_button_tag 'by', "year", class: "form-check-input" %>
+                    <label class="form-check-label" for="by_year">
+                        Theo năm
+                    </label>
+                </div>
+                <div class="form-check">
+                    <%= radio_button_tag 'by', "range", class: "form-check-input" %>
+                    <label class="form-check-label" for="by_range">
+                        Trong khoảng thời gian
+                    </label>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="first_day" class="form-label">Từ ngày</label>
+                        <%= date_field_tag 'first_day', Date.today, class: "form-control" %>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="last_day" class="form-label">Đến ngày</label>
+                        <%= date_field_tag 'last_day', Date.today, class: "form-control" %>
+                    </div>
+                </div>
+                <br />
+            <% end %>
+            <div class="col-auto">    
+                <input id="export_aggressive" type="submit" class="btn btn-primary" value="Xuất tổng kết" />
+                <input id="export_detail" type="submit" class="btn btn-info" value="Xuất chi tiết" />
+            </div>
+        <% end %>
+    </div>
+</div>
