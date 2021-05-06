@@ -4,7 +4,7 @@ class CreateHistories < ActiveRecord::Migration[6.0]
       t.references :product, null: false, foreign_key: true
       t.integer :action, null: false
       t.string :object
-      t.references :stock_manager, null: false, foreign_key: true
+      #t.references :stock_manager, null: false, foreign_key: true
       t.text :note
 
       t.timestamps
