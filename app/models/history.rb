@@ -1,5 +1,7 @@
 class History < ApplicationRecord
+  has_many :history_items
   belongs_to :product
+
   validates :amount, numericality: {
     :greater_than => 0
   }
