@@ -1,8 +1,8 @@
 class Product < ApplicationRecord
   include Hashid::Rails
 
-  has_many :histories, dependent: :delete_all
-
+  has_many :history_items, dependent: :destroy, inverse_of: :product
+  
   validates :number, :numericality => { greater_than_or_equal_to: 0 }
   validates :min, :numericality => { greater_than_or_equal_to: 0 }
 
@@ -15,7 +15,8 @@ class Product < ApplicationRecord
           "%d/%m/%y"
         end
       end
-      field :name
+      field :name do 
+      end
       field :number do
         css_class "text-center"
       end
@@ -31,6 +32,20 @@ class Product < ApplicationRecord
         end
       end
     end
+
+    create do 
+      field :name 
+      field :number 
+      field :min 
+      field :unit 
+    end 
+
+    modal do 
+      field :name 
+      field :number 
+      field :min 
+      field :unit 
+    end 
 
     edit do
       configure :need_import do

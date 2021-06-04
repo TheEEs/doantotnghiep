@@ -5,7 +5,7 @@ vi:
   activerecord:
     errors: 
       models:
-        history:
+        history_item:
           attributes:
             amount: 
               too_large: Số lượng hàng xuất kho vượt quá số lượng có sẵn (%{available})
@@ -14,6 +14,7 @@ vi:
       history: Lịch sử xuất/nhập
       product: Sản phẩm
       stock_manager: Quản kho
+      history_item: Chi tiết lịch sử
     attributes:
       user:
         login: "Handle"
@@ -30,10 +31,20 @@ vi:
         note: Ghi chú
         created_at: Ngày Tháng
         total: Tổng giá
+        history_items: Chi tiết lịch sử
+      history_item:
+        price: Giá
+        product: Tên sản phẩm
+        amount: Số lượng
+        created_at: Ngày Tháng
+        unit: Đơn vị tính
+        category: Danh mục
+        total: Tổng giá
       stock_manager:
         name: Tên quản kho
         histories: Lịch sử xuất/nhập kho
       product:
+        history_items: Danh mục hàng hóa
         name: Tên sản phẩm
         number: Số lượng tồn kho
         unit: Đơn vị đo

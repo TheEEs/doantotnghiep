@@ -1,0 +1,20 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Giá cả</th>
+            <th>Tổng</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% items.each do |items| %>
+            <tr>
+                <td><%= items.product.name %></td>
+                <td><%= items.amount %></td>
+                <td><%= items.price %></td>
+                <td><%= items.price * items.amount %></td>
+            </tr>
+        <% end %>
+    <tbody>
+</table>

@@ -62,16 +62,18 @@ sheet.add_row ["Ngày Tháng", "Sản phẩm", "Số lượng", "Đơn Giá", "T
 first_row = 9
 last_row = nil
 @histories.each_with_index do |history, index|
-  last_row = sheet.add_row([
-                             history.created_at.strftime("%d/%m/%y"),
-                             history.product.name,
-                             history.amount,
-                             history.price,
-                             history.amount * history.price,
-                             history.action,
-                             history.object,
-                             history.note
-                           ], style: table_row_currency, :sz => 14)
+  history.history_items.each_with_index do |item, idx|
+    last_row = sheet.add_row([
+      history.created_at.strftime("%d/%m/%y"),
+      item.product.name,
+      item.amount,
+      item.price,
+      item.amount * item.price,
+      history.action,
+      history.object,
+      history.note
+    ], style: table_row_currency, :sz => 14)
+  end
 end
 
 #if @histories.any?
