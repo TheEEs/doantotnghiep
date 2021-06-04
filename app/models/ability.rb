@@ -18,10 +18,12 @@ class Ability
       can [:create, :destroy], User do |u| 
         u.role == "user"
       end
-      can :manage, [History, Product]
+      can :manage, [History, Product, HistoryItem]
+      cannot :show, HistoryItem
     elsif user.user?
       can :read, :statistic
-      can :manage, [History, Product]
+      can :manage, [History, Product, HistoryItem]
+      cannot :show, HistoryItem
     end
   end
 end

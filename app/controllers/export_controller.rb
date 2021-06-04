@@ -15,7 +15,7 @@ class ExportController < ApplicationController
             @histories = @histories.merge(History.in_range(first_day, last_day))
           end
         elsif model_name == "history"
-          @histories = History.where(id: RailsAdmin::HASHER.decode(ids)).eager_load(:product)
+          @histories = History.where(id: RailsAdmin::HASHER.decode(ids)).eager_load(:products)
         end
         #latest_update_of_each_product = History.group('product_id','action').maximum("created_at")
         #@statistic = @histories.where(created_at: latest_update_of_each_product.values).includes(:product).order('products.name')
@@ -24,8 +24,8 @@ class ExportController < ApplicationController
           @histories = @histories.group('products.id','histories.action').pluck(
           'products.name',
           'histories.action',
-          'sum(histories.amount)',
-          'sum(histories.price * histories.amount)',
+          'sum(history_items.amount)',
+          'sum(history_items.price * history_items.amount)',
           'products.number',
           )
           render xlsx: 'Báo Cáo Tổng Kết',template: "export/aggressive"

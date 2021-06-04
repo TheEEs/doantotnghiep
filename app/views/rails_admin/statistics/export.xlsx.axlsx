@@ -17,5 +17,5 @@ sheet.page_setup.paper_size = 9
 sheet.add_row ["Thống kê"], sz: 18, height: 30, style: vertical_center
 sheet.add_row ["#", "Tên sản phẩm", "Đơn giá mới nhất"], style: table_header
 histories.each_with_index do |history,index|
-    sheet.add_row [index,history.product.name, history.price], style: table_row_currency
+    sheet.add_row [index + 1,history.product.name, history.price], style: table_row_currency
 end

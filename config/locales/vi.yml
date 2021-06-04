@@ -50,7 +50,7 @@ vi:
       more: "Plus %{count} more %{models_name}"
     flash:
       successful: "%{name} %{action} thành công"
-      error: "không thể  %{action} %{name}"
+      error: "%{name} không %{action} vì"
       noaction: "Không có hành động nào được thực hiện"
       model_not_found: "Không thể tìm được '%{model}' nào"
       object_not_found: "Không thể tìm được %{model} với  id '%{id}'"

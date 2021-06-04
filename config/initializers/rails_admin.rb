@@ -27,11 +27,13 @@ RailsAdmin.config do |config|
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
-    new
+    new do 
+      except [HistoryItem]
+    end
     bulk_delete
     show
     edit do
-      except History
+      except [HistoryItem]
     end
     delete
     show_in_app

@@ -31,16 +31,16 @@ module RailsAdmin
           Proc.new do
             respond_to do |format|
               format.html do
-                latest_transaction_of_each_product = History.group('product_id','action').maximum("created_at")
-                histories = History.where(created_at: latest_transaction_of_each_product.values).includes(:product).order('products.name')
+                latest_transaction_of_each_product = HistoryItem.eager_load(:product).eager_load(:history).group('product_id','histories.action').maximum("created_at")
+                histories = HistoryItem.where(created_at: latest_transaction_of_each_product.values).eager_load(:product).order('products.name')
                 render action: @action.template_name, 
                   locals: { 
                     histories: histories
                   }
               end
               format.xlsx do 
-                latest_transaction_of_each_product = History.group('product_id','action').maximum("created_at")
-                histories = History.where(created_at: latest_transaction_of_each_product.values).includes(:product).order('products.name')
+                latest_transaction_of_each_product = HistoryItem.eager_load(:product).eager_load(:history).group('product_id','histories.action').maximum("created_at")
+                histories = HistoryItem.where(created_at: latest_transaction_of_each_product.values).includes(:product).order('products.name')
                 render xlsx: "Thống kê", template: "rails_admin/statistics/export.xlsx.axlsx", locals:{
                   histories: histories
                 }

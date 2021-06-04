@@ -72,30 +72,21 @@ first_row = 11
 last_row = nil
 import = I18n.t("activerecord.attributes.history.action_import")
 export = I18n.t("activerecord.attributes.history.action_export")
+items = {}
 @histories.each_with_index do |history, index|
+  unless items.has_key? history.first
+    items[history.first] = [nil] * 7
+  end
+  if history[1] == import
+    items[history.first][0] = history[2]
+    items[history.first][1] = history[3]
+  elsif history[1] == export
+    items[history.first][2] = history[2]
+    items[history.first][3] = history[3]
+  end
+  items[history.first][4] = history[4]
 =begin
-  last_row = sheet.add_row([
-                             history.created_at.strftime("%d/%m/%y"),
-                             history.product.name,
-                             history.price,
-                             if history.action == I18n.t("activerecord.attributes.history.action_import")
-                               history.amount
-                             end,
-                             if history.action == I18n.t("activerecord.attributes.history.action_import")
-                               "=(C#{first_row + index}*D#{first_row + index})"
-                             end,
-                             if history.action == I18n.t("activerecord.attributes.history.action_export")
-                               history.amount
-                             end,
-                             if history.action == I18n.t("activerecord.attributes.history.action_export")
-                               "=(C#{first_row + index}*F#{first_row + index})"
-                             end,
-                             history.product.number,
-                             nil,
-                             nil
-                           ], style: table_row_currency, :sz => 14)
-=end
-last_row = sheet.add_row [
+  last_row = sheet.add_row [
   history[0],
   if history[1] == import
     history[2]
@@ -109,7 +100,7 @@ last_row = sheet.add_row [
   if history[1] == export
     history[3]
   end,
-  history[4],
+  ,
   nil,
   nil
 ], style: [
@@ -120,6 +111,18 @@ last_row = sheet.add_row [
   table_row_normal,
   nil
 ], :sz => 14
+=end
+end
+
+items.each do |k,v| 
+  last_row = sheet.add_row [k, *v], style: [
+    table_row_normal,
+    table_row_normal,
+    *([table_row_currency] * 6),
+    table_row_normal,
+    table_row_normal,
+    nil
+  ], :sz => 14
 end
 
 if @histories.any?
