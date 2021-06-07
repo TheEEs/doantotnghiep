@@ -9,6 +9,7 @@ services:
     command: '/bin/bash'
     stdin_open: true
     tty: true
+    working_dir: /home/app
     depends_on: 
       - pg
   pg:
