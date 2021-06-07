@@ -1,0 +1,19 @@
+version: "3.3"
+services:
+  web:
+    image: 'ruby:2.7.1'
+    volumes: 
+      - .:/home/app
+    ports:
+      - "3000:3000"
+    command: '/bin/bash'
+    stdin_open: true
+    tty: true
+    depends_on: 
+      - pg
+  pg:
+    image: "postgres:latest"
+    environment: 
+      POSTGRES_PASSWORD: trandat
+      POSTGRES_USER: trandat
+      POSTGRES_DB: doan_development
